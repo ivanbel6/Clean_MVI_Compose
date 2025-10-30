@@ -20,5 +20,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Clean_MVI_Compose"
-include(":app")
- 
+include(":presentation")
+include(":data")
+include(":domain")
+include(":core-test")
