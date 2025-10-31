@@ -2,6 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.kover)
 }
 
 android {
@@ -41,6 +46,56 @@ android {
 
 dependencies {
 
+    // --- Модули проекта ---
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    testImplementation(project(":core-test")) // если есть
+
+    // --- Kover Coverage (для анализа покрытия тестами) ---
+    kover(project(":data"))
+    kover(project(":domain"))
+
+    // Kotlin
+    implementation(libs.kotlin.stdlib.jdk7)
+
+    // AndroidX
+    implementation(libs.androidx.appcompat)
+    implementation(libs.lifecycle.viewmodel.ktx)
+
+    // Extensions
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.lifecycle.extensions)
+
+    // okHttp
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    // GSON
+    implementation(libs.gson)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.retrofit2.kotlin.coroutines.adapter)
+
+    // Room
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+
+    // --- Hilt (DI) ---
+    implementation(libs.hilt.dagger.android)
+    implementation(libs.hilt.navigation.compose)
+    ksp(libs.hilt.dagger.compiler)
+    ksp(libs.hilt.compiler)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Paging
+    implementation(libs.paging.compose)
+
+
+    //Base
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -56,4 +111,15 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+
+    // Coil
+    implementation(libs.coil.compose)
+
+    // Navigation
+    implementation(libs.navigation.compose)
+    implementation(libs.hilt.navigation.compose)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }
