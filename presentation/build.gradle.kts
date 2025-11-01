@@ -49,6 +49,7 @@ dependencies {
     // --- Модули проекта ---
     implementation(project(":data"))
     implementation(project(":domain"))
+    implementation(libs.androidx.material3)
     testImplementation(project(":core-test")) // если есть
 
     // --- Kover Coverage (для анализа покрытия тестами) ---
@@ -122,4 +123,6 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    implementation("androidx.datastore:datastore-preferences:1.1.1")  // Актуальная версия на 2025
 }
