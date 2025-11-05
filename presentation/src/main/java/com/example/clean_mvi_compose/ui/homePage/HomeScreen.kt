@@ -1,5 +1,6 @@
 package com.example.clean_mvi_compose.ui.homePage
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.clean_mvi_compose.entities.SpaceItem
+import com.example.clean_mvi_compose.ui.main.SettingsManager
 
 
 @OptIn(ExperimentalMaterial3Api::class)
