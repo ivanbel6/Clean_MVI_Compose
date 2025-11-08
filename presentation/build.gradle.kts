@@ -124,5 +124,5 @@ dependencies {
     // Serialization
     implementation(libs.kotlinx.serialization.json)
 
-    implementation("androidx.datastore:datastore-preferences:1.1.1")  // Актуальная версия на 2025
+    implementation(libs.androidx.datastore.preferences)  // Актуальная версия на 2025
 }

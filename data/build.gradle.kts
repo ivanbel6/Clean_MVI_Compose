@@ -34,7 +34,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-    implementation("androidx.datastore:datastore-preferences:1.1.1")  // Актуальная версия на 2025
+    implementation(libs.androidx.datastore.preferences)  // Актуальная версия на 2025
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

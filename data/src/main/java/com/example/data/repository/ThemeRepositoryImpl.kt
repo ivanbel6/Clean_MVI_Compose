@@ -17,7 +17,7 @@ class ThemeRepositoryImpl(val context: Context) : ThemeRepository {
         var IS_DARK_THEME_KEY = booleanPreferencesKey("them_key")
     }
 
-    override suspend fun getTheme(): Flow<Boolean> =
+    override  fun getTheme(): Flow<Boolean> =
         context.dataStore.data.map { preferences -> preferences[IS_DARK_THEME_KEY] ?: false }
 
     override suspend fun setTheme(isDark: Boolean) {

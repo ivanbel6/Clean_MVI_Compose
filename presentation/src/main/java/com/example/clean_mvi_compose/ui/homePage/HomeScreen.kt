@@ -25,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.clean_mvi_compose.entities.SpaceItem
-import com.example.clean_mvi_compose.ui.main.SettingsManager
 
 
 @OptIn(ExperimentalMaterial3Api::class)
