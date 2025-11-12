@@ -1,6 +1,5 @@
 package com.example.clean_mvi_compose.ui.homePage
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,14 +24,30 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.clean_mvi_compose.entities.SpaceItem
+import com.example.clean_mvi_compose.ui.main.MainIntent
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    items: List<SpaceItem>,
-    onItemClick: (SpaceItem) -> Unit = {}
+    onItemClick: (SpaceItem) -> Unit = {},
+    vmIntent: (MainIntent) -> Unit ,
 ) {
+    val items = listOf(
+        SpaceItem(
+            "Earth",
+            "Our home planet, the third from the Sun.",
+            "https://images-assets.nasa.gov/image/PIA18033/PIA18033~medium.jpg"
+        ), SpaceItem(
+            "Mars",
+            "The red planet, known for its iron oxide surface.",
+            "https://images-assets.nasa.gov/image/PIA00407/PIA00407~medium.jpg"
+        ), SpaceItem(
+            "Jupiter",
+            "The gas giant with a massive storm called the Great Red Spot.",
+            "https://images-assets.nasa.gov/image/PIA21775/PIA21775~medium.jpg"
+        )
+    )
     Scaffold(
         topBar = {
             TopAppBar(
@@ -107,5 +122,5 @@ fun MainScreenPreview() {
             "https://images-assets.nasa.gov/image/PIA21775/PIA21775~medium.jpg"
         )
     )
-    HomeScreen(items = mockData)
+    //HomeScreen(items = mockData)
 }

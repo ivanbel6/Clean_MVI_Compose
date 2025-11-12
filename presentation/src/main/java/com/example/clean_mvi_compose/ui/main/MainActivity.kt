@@ -1,10 +1,10 @@
 package com.example.clean_mvi_compose.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -32,6 +32,10 @@ class MainActivity : ComponentActivity() {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
 
+            //viewModel.handleIntent(MainIntent.CheckInternet)
+
+            Log.v("TestInternetConnection" , uiState.toString())
+
             LaunchedEffect(Unit) {
                 viewModel.handleIntent(MainIntent.LoadTheme)
             }
@@ -46,31 +50,12 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.spacedBy(24.dp)
                     ) {
                         ThemeSwitcher(
-                            isDarkTheme = uiState.isDarkTheme, onToggle = {
-                                viewModel.handleIntent(
-                                    MainIntent.ToggleTheme(
-                                        it
-                                    )
-                                )
-                            })
-
+                            isDarkTheme = uiState.isDarkTheme,
+                            onToggle = viewModel::handleIntent
+                        )
 
                         HomeScreen(
-                            listOf(
-                                SpaceItem(
-                                    "Earth",
-                                    "Our home planet, the third from the Sun.",
-                                    "https://images-assets.nasa.gov/image/PIA18033/PIA18033~medium.jpg"
-                                ), SpaceItem(
-                                    "Mars",
-                                    "The red planet, known for its iron oxide surface.",
-                                    "https://images-assets.nasa.gov/image/PIA00407/PIA00407~medium.jpg"
-                                ), SpaceItem(
-                                    "Jupiter",
-                                    "The gas giant with a massive storm called the Great Red Spot.",
-                                    "https://images-assets.nasa.gov/image/PIA21775/PIA21775~medium.jpg"
-                                )
-                            )
+                            vmIntent = viewModel::handleIntent
                         )
                     }
                 }
@@ -82,7 +67,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ThemeSwitcher(
     isDarkTheme: Boolean,
-    onToggle: (Boolean) -> Unit,
+    onToggle: (MainIntent) -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -95,6 +80,6 @@ fun ThemeSwitcher(
         )
 
         Switch(
-            checked = isDarkTheme, onCheckedChange = { onToggle(it) })
+            checked = isDarkTheme, onCheckedChange = { onToggle(MainIntent.ToggleTheme(it)) })
     }
 }
