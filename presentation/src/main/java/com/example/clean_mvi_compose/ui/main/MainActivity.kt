@@ -38,6 +38,7 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(Unit) {
                 viewModel.handleIntent(MainIntent.LoadTheme)
+                viewModel.handleIntent(MainIntent.ToggleTheme(false))
             }
 
             Clean_MVI_ComposeTheme(darkTheme = uiState.isDarkTheme) {
