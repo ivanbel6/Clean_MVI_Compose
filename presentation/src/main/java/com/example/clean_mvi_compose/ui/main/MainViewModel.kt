@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.NetworkError
 import com.example.domain.Result
+import com.example.domain.errorHandling.AppResult
 import com.example.domain.usecase.networkUseCases.ObserveInternetConnection
 import com.example.domain.usecase.themeUseCases.ObserveTheme
 import com.example.domain.usecase.themeUseCases.SetTheme
+import com.example.domain.usecase.themeUseCases.themeError.ThemeError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -57,16 +59,26 @@ class MainViewModel @Inject constructor(
                     }
                 }
                 .collect { isDark ->
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            isDarkTheme = isDark,
-                            error = null
-                        )
+                    when (isDark) {
+                        is AppResult.Failure<*> -> _uiState.update {
+                            it.copy(
+                                error = "ERROR WHILE THEME CHANGE"
+                            )
+                        }
+
+                        is AppResult.Success<Boolean> -> _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                isDarkTheme = isDark.data,
+                                error = null
+                            )
+                        }
                     }
+
                 }
         }
     }
+
 
     private fun toggleTheme(isDark: Boolean) {
         viewModelScope.launch {
@@ -84,11 +96,12 @@ class MainViewModel @Inject constructor(
             checkNetwork().onEach { isConnected ->
                 when (isConnected) {
                     is Result.Error<*, *> ->
-                        when (isConnected.error){
+                        when (isConnected.error) {
                             NetworkError.Local.DISK_FULL -> _uiState.update { it.copy(error = "DISK_FULL") }
                             NetworkError.Network.NO_INTERNET -> _uiState.update { it.copy(error = "NO_INTERNET") }
                             NetworkError.Network.UNKNOWN_ERROR -> _uiState.update { it.copy(error = "UNKNOWN_ERROR") }
                         }
+
                     is Result.Success<Boolean, *> -> _uiState.update { it.copy(netWork = isConnected.data) }
                 }
             }.launchIn(viewModelScope)
