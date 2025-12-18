@@ -1,11 +1,10 @@
 package com.example.domain.repository
 
-import com.example.domain.errorHandling.AppResult
-import com.example.domain.usecase.networkUseCases.networkError.NetworkError
+import com.example.domain.NetworkError
+import com.example.domain.Result
 import kotlinx.coroutines.flow.Flow
 
 interface NetworkRepository {
-    //fun getNetwork() : Boolean
-    fun observeNetwork(): Flow<AppResult<Boolean, NetworkError>>
+    fun observeNetwork(): Flow<Result<Boolean, NetworkError.Network>>
 
 }

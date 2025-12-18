@@ -2,20 +2,31 @@ package com.example.clean_mvi_compose.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.errorHandling.AppResult
+import com.example.domain.NetworkError
+import com.example.domain.Result
 import com.example.domain.usecase.networkUseCases.ObserveInternetConnection
-import com.example.domain.usecase.themeUseCases.GetTheme
+import com.example.domain.usecase.themeUseCases.ObserveTheme
 import com.example.domain.usecase.themeUseCases.SetTheme
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import jakarta.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val setThemeUseCase: SetTheme,
-    private val getThemeUseCase: GetTheme,
-    private val observeNetworkUseCase: ObserveInternetConnection
+    private val observeThemeUseCase: ObserveTheme,
+    private val checkNetwork: ObserveInternetConnection,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MainUiState())
@@ -25,65 +36,65 @@ class MainViewModel @Inject constructor(
         observeTheme()
         observeNetwork()
     }
+
     fun handleIntent(intent: MainIntent) {
         when (intent) {
-            is MainIntent.LoadTheme -> observeTheme()
             is MainIntent.ToggleTheme -> toggleTheme(intent.isDark)
-            is MainIntent.CheckInternet -> observeNetwork()
         }
     }
 
     private fun observeTheme() {
-        getThemeUseCase()
-            .onEach { result ->
-                when (result) {
-                    is AppResult.Success -> {
-                        _uiState.update {
-                            it.copy(
-                                isDarkTheme = result.data,
-                                isLoading = false,
-                                error = null
-                            )
-                        }
-                    }
-
-                    is AppResult.Failure -> {
-                        _uiState.update {
-                            it.copy(
-                                isLoading = false,
-                                error = result.error.toUiText()
-                            )
-                        }
+        viewModelScope.launch {
+            observeThemeUseCase()
+                .distinctUntilChanged()
+                .onStart { _uiState.update { it.copy(isLoading = true) } }
+                .catch { e ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = e.message ?: "Ошибка при загрузке темы"
+                        )
                     }
                 }
-            }
-            .onStart {
-                _uiState.update { it.copy(isLoading = true) }
-            }
-            .launchIn(viewModelScope)
+                .collect { isDark ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            isDarkTheme = isDark,
+                            error = null
+                        )
+                    }
+                }
+        }
+    }
+
+    private fun toggleTheme(isDark: Boolean) {
+        viewModelScope.launch {
+            runCatching { setThemeUseCase(isDark) }
+                .onFailure { e ->
+                    _uiState.update {
+                        it.copy(error = e.message ?: "Не удалось изменить тему")
+                    }
+                }
+        }
     }
 
     private fun observeNetwork() {
-        observeNetworkUseCase()
-            .onEach { result ->
-                when (result) {
-                    is AppResult.Success ->
-                        _uiState.update { it.copy(netWork = result.data) }
-
-                    is AppResult.Failure ->
-                        _uiState.update { it.copy(error = result.error.toUiText()) }
-                }
-            }
-            .launchIn(viewModelScope)
-    }
-
-    fun toggleTheme(isDark: Boolean) {
         viewModelScope.launch {
-            when (val result = setThemeUseCase(isDark)) {
-                is AppResult.Success -> Unit
-                is AppResult.Failure ->
-                    _uiState.update { it.copy(error = result.error.toUiText()) }
-            }
+            checkNetwork().onEach { isConnected ->
+                when (isConnected) {
+                    is Result.Error<*, *> ->
+                        when (isConnected.error){
+                            NetworkError.Local.DISK_FULL -> _uiState.update { it.copy(error = "DISK_FULL") }
+                            NetworkError.Network.NO_INTERNET -> _uiState.update { it.copy(error = "NO_INTERNET") }
+                            NetworkError.Network.UNKNOWN_ERROR -> _uiState.update { it.copy(error = "UNKNOWN_ERROR") }
+                        }
+                    is Result.Success<Boolean, *> -> _uiState.update { it.copy(netWork = isConnected.data) }
+                }
+            }.launchIn(viewModelScope)
+
         }
     }
+
+
 }

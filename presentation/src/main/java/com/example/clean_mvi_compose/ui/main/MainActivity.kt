@@ -36,10 +36,7 @@ class MainActivity : ComponentActivity() {
 
             Log.v("TestInternetConnection" , uiState.toString())
 
-            LaunchedEffect(Unit) {
-                viewModel.handleIntent(MainIntent.LoadTheme)
-                viewModel.handleIntent(MainIntent.ToggleTheme(false))
-            }
+
 
             Clean_MVI_ComposeTheme(darkTheme = uiState.isDarkTheme) {
                 Surface(modifier = Modifier.fillMaxSize()) {
