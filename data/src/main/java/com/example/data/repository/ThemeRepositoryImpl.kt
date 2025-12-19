@@ -41,15 +41,5 @@ class ThemeRepositoryImpl @Inject constructor(val context: Context) : ThemeRepos
         } catch (e: Exception) {
             AppResult.Failure(ThemeError.Storage)
         }
-
-
-//    override  fun getTheme(): Flow<Boolean> =
-//        context.dataStore.data.map { preferences -> preferences[IS_DARK_THEME_KEY] ?: false }
-//
-//    override suspend fun setTheme(isDark: Boolean) {
-//        context.dataStore.edit { preferences ->
-//            preferences[IS_DARK_THEME_KEY] = isDark
-//        }
-//    }
 }
 

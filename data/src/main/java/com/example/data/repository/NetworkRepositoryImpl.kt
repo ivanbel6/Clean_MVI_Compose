@@ -18,7 +18,7 @@ class NetworkRepositoryImpl @Inject constructor(
     private val context: Context,
 ) : NetworkRepository {
 
-    override fun observeNetwork(): Flow<Result<Boolean, NetworkError.Network>> =
+    override fun observeNetwork(): Flow<Result<Boolean, NetworkError>> =
         callbackFlow<Boolean> {
             val connectivityManager =
                 context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

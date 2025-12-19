@@ -9,5 +9,5 @@ import javax.inject.Inject
 class ObserveInternetConnection @Inject constructor(
     private val repo: NetworkRepository,
 ) {
-    operator fun invoke(): Flow<Result<Boolean, NetworkError.Network>> = repo.observeNetwork()
+    operator fun invoke(): Flow<Result<Boolean, NetworkError>> = repo.observeNetwork()
 }
