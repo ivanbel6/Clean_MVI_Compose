@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import com.example.domain.NetworkError
 import com.example.domain.Result
+import com.example.domain.Result.Success
 import com.example.domain.repository.NetworkRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -38,7 +39,7 @@ class NetworkRepositoryImpl @Inject constructor(
         }
             .distinctUntilChanged()
             .map<Boolean, Result<Boolean, NetworkError.Network>> { isConnected ->
-                Result.Success(isConnected)
+                Success(isConnected)
             }
             .catch {
                 emit(Result.Error(NetworkError.Network.UNKNOWN_ERROR))

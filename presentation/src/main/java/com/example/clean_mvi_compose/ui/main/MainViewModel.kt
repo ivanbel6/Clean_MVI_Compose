@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.NetworkError
 import com.example.domain.Result
-import com.example.domain.errorHandling.AppResult
+import com.example.domain.ThemeError
 import com.example.domain.usecase.networkUseCases.ObserveInternetConnection
 import com.example.domain.usecase.themeUseCases.ObserveTheme
 import com.example.domain.usecase.themeUseCases.SetTheme
@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -57,13 +55,13 @@ class MainViewModel @Inject constructor(
                 }
                 .collect { isDark ->
                     when (isDark) {
-                        is AppResult.Failure<*> -> _uiState.update {
-                            it.copy(
-                                error = "ERROR WHILE THEME CHANGE"
-                            )
-                        }
+                        is Result.Error ->
+                            when (isDark.error) {
+                                ThemeError.Errors.GET_THEME_ERROR -> _uiState.update { it.copy(error = "Cant get theme") }
+                                ThemeError.Errors.SET_THEME_ERROR -> _uiState.update { it.copy(error = "Cant set theme") }
+                            }
 
-                        is AppResult.Success<Boolean> -> _uiState.update {
+                        is Result.Success -> _uiState.update {
                             it.copy(
                                 isLoading = false,
                                 isDarkTheme = isDark.data,
@@ -79,13 +77,16 @@ class MainViewModel @Inject constructor(
 
     private fun toggleTheme(isDark: Boolean) {
         viewModelScope.launch {
-            runCatching { setThemeUseCase(isDark) }
-                .onFailure { e ->
+            when (val result = setThemeUseCase(isDark)) {
+                is Result.Success -> Unit
+                is Result.Error -> {
                     _uiState.update {
-                        it.copy(error = e.message ?: "Не удалось изменить тему")
+                        it.copy(error = "Не удалось изменить тему")
                     }
                 }
+            }
         }
+        
     }
 
     private fun observeNetwork() {
