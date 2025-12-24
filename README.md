@@ -1,112 +1,113 @@
 # Android Application (Work in Progress)
 
-Современное Android-приложение, разрабатываемое с упором на масштабируемость, читаемость кода и долгосрочную поддержку.  
-Проект находится в активной разработке и используется как платформа для отработки и применения актуальных Android-практик.
+[Русская версия README](README.ru.md)
+
+A modern Android application focused on scalability, code readability, and long-term maintainability.  
+The project is currently under active development and serves as a practical implementation of modern Android development approaches.
 
 ---
 
-## 🧱 Архитектура
+## 🧱 Architecture
 
-Проект построен на принципах **Clean Architecture** и реализован в виде **многомодульного Android-приложения**, что позволяет:
-- изолировать слои ответственности
-- упростить тестирование
-- облегчить масштабирование и развитие проекта
+The project follows **Clean Architecture** principles and is implemented as a **multi-module Android application**, which allows:
+- clear separation of responsibilities
+- easier testing
+- improved scalability and maintainability
 
-В качестве архитектурного паттерна используется **MVI**, обеспечивающий:
-- явное управление состоянием экранов
-- предсказуемость UI
-- упрощённую отладку и тестирование
+The chosen architectural pattern is **MVI**, providing:
+- explicit screen state management
+- predictable UI behavior
+- simplified debugging and testing
 
 ---
 
 ## 🎨 UI
 
-- **Jetpack Compose** — декларативный UI
+- **Jetpack Compose** (declarative UI)
 - **Material Design 3**
-- **Navigation Component** для навигации
-- Анимации и переходы реализованы непосредственно в Compose
+- **Navigation Component**
+- Animations and transitions implemented directly in Compose
 
-UI-слой построен вокруг однонаправленного потока данных и реагирует исключительно на изменения состояния.
+The UI layer is built around a unidirectional data flow and reacts solely to state changes.
 
 ---
 
-## ⚙️ Асинхронность и состояние
+## ⚙️ Asynchrony & State
 
 - **Kotlin Coroutines**
 - **Flow / StateFlow / SharedFlow**
 
-Особое внимание уделено потокобезопасности:
-- используются `Mutex`
-- атомарные операции применяются там, где это необходимо
+Special attention is paid to thread safety:
+- `Mutex` is used where required
+- atomic operations are applied when necessary
 
 ---
 
 ## 🔌 Dependency Injection
 
-Для внедрения зависимостей используется **Dagger 2 / Hilt**, что позволяет:
-- снизить связанность компонентов
-- упростить тестирование
-- подготовить проект к дальнейшему масштабированию
+- **Dagger 2 / Hilt**
+
+Used to reduce coupling between components and simplify testing and future scaling.
 
 ---
 
-## 🌐 Сетевое взаимодействие
+## 🌐 Networking
 
-- Клиент-серверная архитектура
+- Client-server architecture
 - **REST API**
-- **Retrofit** в качестве HTTP-клиента
+- **Retrofit**
 
 ---
 
-## 💾 Хранение данных
+## 💾 Data Storage
 
-- **Room (SQLite)** для локального хранения
-- **Offline-first подход** с кэшированием данных
-- **DataStore** для хранения пользовательских настроек  
-  (как современная альтернатива SharedPreferences)
+- **Room (SQLite)**
+- **Offline-first approach** with caching
+- **DataStore** for lightweight user preferences  
+  (as a modern alternative to SharedPreferences)
 
-Приложение корректно работает при нестабильном или отсутствующем соединении.
+The application remains functional under unstable or missing network conditions.
 
 ---
 
 ## ♻️ Lifecycle
 
-Проект корректно интегрирован с:
+Proper integration with:
 - Android Lifecycle
 - Architecture Components
 
-Это снижает риск утечек памяти и ошибок, связанных с жизненным циклом компонентов.
+This reduces the risk of memory leaks and lifecycle-related bugs.
 
 ---
 
-## 🧪 Тестирование
+## 🧪 Testing
 
-- Unit-тесты для:
-  - ViewModel
-  - бизнес-логики (UseCases)
+- Unit tests for:
+  - ViewModels
+  - business logic (UseCases)
 - **JUnit**
 
 ---
 
-## 🛠️ Инструменты и сборка
+## 🛠️ Tooling & Build
 
 - **Kotlin**
 - **Gradle**
 - **Git / GitHub**
 
-Структура проекта подготовлена для подключения **CI/CD pipeline**.
+The project structure is prepared for CI/CD pipeline integration.
 
 ---
 
-## 🚧 Статус проекта
+## 🚧 Project Status
 
-Проект находится в активной разработке.  
-Функциональность и архитектурные решения продолжают эволюционировать по мере роста требований.
+The project is under active development.  
+Architecture and functionality continue to evolve as new requirements emerge.
 
 ---
 
-## 📌 Цели проекта
+## 📌 Project Goals
 
-- Применение современных Android-подходов
-- Отработка архитектурных решений на практике
-- Создание поддерживаемой и расширяемой кодовой базы
+- Apply modern Android development practices
+- Practice architectural decision-making
+- Build a clean, maintainable, and extensible codebase
