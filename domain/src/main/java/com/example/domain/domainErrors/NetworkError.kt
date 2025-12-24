@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.domain.domainErrors
 
 sealed interface NetworkError : Error {
     enum class Network : NetworkError {

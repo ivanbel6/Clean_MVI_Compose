@@ -2,9 +2,9 @@ package com.example.clean_mvi_compose.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.NetworkError
-import com.example.domain.Result
-import com.example.domain.ThemeError
+import com.example.domain.domainErrors.NetworkError
+import com.example.domain.domainErrors.Result
+import com.example.domain.domainErrors.ThemeError
 import com.example.domain.usecase.networkUseCases.ObserveInternetConnection
 import com.example.domain.usecase.themeUseCases.ObserveTheme
 import com.example.domain.usecase.themeUseCases.SetTheme
@@ -77,7 +77,7 @@ class MainViewModel @Inject constructor(
 
     private fun toggleTheme(isDark: Boolean) {
         viewModelScope.launch {
-            when (val result = setThemeUseCase(isDark)) {
+            when (setThemeUseCase(isDark)) {
                 is Result.Success -> Unit
                 is Result.Error -> {
                     _uiState.update {

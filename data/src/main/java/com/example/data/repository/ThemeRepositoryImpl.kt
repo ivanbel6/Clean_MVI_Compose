@@ -5,9 +5,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import com.example.domain.Result
-import com.example.domain.Result.Success
-import com.example.domain.ThemeError
+import com.example.domain.domainErrors.Result
+import com.example.domain.domainErrors.Result.Success
+import com.example.domain.domainErrors.ThemeError
 import com.example.domain.repository.ThemeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

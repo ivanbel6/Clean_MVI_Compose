@@ -3,9 +3,9 @@ package com.example.data.repository
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
-import com.example.domain.NetworkError
-import com.example.domain.Result
-import com.example.domain.Result.Success
+import com.example.domain.domainErrors.NetworkError
+import com.example.domain.domainErrors.Result
+import com.example.domain.domainErrors.Result.Success
 import com.example.domain.repository.NetworkRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow

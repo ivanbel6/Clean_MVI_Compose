@@ -32,7 +32,6 @@ class MainActivity : ComponentActivity() {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
 
-            //viewModel.handleIntent(MainIntent.CheckInternet)
 
             Log.v("TestInternetConnection" , uiState.toString())
 

@@ -1,7 +1,7 @@
 package com.example.domain.usecase.themeUseCases
 
-import com.example.domain.Result
-import com.example.domain.ThemeError
+import com.example.domain.domainErrors.Result
+import com.example.domain.domainErrors.ThemeError
 import com.example.domain.repository.ThemeRepository
 import javax.inject.Inject
 

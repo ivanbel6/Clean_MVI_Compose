@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.domain.domainErrors
 
 sealed interface ThemeError : Error {
     enum class Errors : ThemeError {
