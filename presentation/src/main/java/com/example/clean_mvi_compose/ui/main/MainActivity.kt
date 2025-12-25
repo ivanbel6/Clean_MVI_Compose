@@ -2,18 +2,28 @@ package com.example.clean_mvi_compose.ui.main
 
 import android.os.Bundle
 import android.util.Log
+import com.example.clean_mvi_compose.R
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.clean_mvi_compose.entities.SpaceItem
 import com.example.clean_mvi_compose.ui.homePage.HomeScreen
 import com.example.clean_mvi_compose.ui.theme.Clean_MVI_ComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,7 +82,9 @@ fun ThemeSwitcher(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = if (isDarkTheme) "Тёмная тема" else "Светлая тема",
+            text = stringResource(
+                id = if (isDarkTheme) R.string.dark_theme else R.string.light_theme
+            ),
             style = MaterialTheme.typography.titleMedium
         )
 

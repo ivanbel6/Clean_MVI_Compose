@@ -13,7 +13,6 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
@@ -42,30 +41,28 @@ class MainViewModel @Inject constructor(
 
     private fun observeTheme() {
         viewModelScope.launch {
-            observeThemeUseCase()
-                .distinctUntilChanged()
-                .onStart { _uiState.update { it.copy(isLoading = true) } }
-                .catch { e ->
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            error = e.message ?: "Ошибка при загрузке темы"
-                        )
-                    }
-                }
-                .collect { isDark ->
+            observeThemeUseCase().distinctUntilChanged()
+                .onStart { _uiState.update { it.copy(isLoading = true) } }.collect { isDark ->
                     when (isDark) {
-                        is Result.Error ->
-                            when (isDark.error) {
-                                ThemeError.Errors.GET_THEME_ERROR -> _uiState.update { it.copy(error = "Cant get theme") }
-                                ThemeError.Errors.SET_THEME_ERROR -> _uiState.update { it.copy(error = "Cant set theme") }
+                        is Result.Error -> when (isDark.error) {
+                            ThemeError.Errors.GET_THEME_ERROR -> _uiState.update {
+                                it.copy(
+                                    error = ThemeError.Errors.GET_THEME_ERROR,
+                                    isLoading = false,
+                                )
                             }
+
+                            ThemeError.Errors.SET_THEME_ERROR -> _uiState.update {
+                                it.copy(
+                                    error = ThemeError.Errors.SET_THEME_ERROR,
+                                    isLoading = false,
+                                )
+                            }
+                        }
 
                         is Result.Success -> _uiState.update {
                             it.copy(
-                                isLoading = false,
-                                isDarkTheme = isDark.data,
-                                error = null
+                                isLoading = false, isDarkTheme = isDark.data, error = null
                             )
                         }
                     }
@@ -81,24 +78,31 @@ class MainViewModel @Inject constructor(
                 is Result.Success -> Unit
                 is Result.Error -> {
                     _uiState.update {
-                        it.copy(error = "Не удалось изменить тему")
+                        it.copy(error = ThemeError.Errors.SET_THEME_ERROR)
                     }
                 }
             }
         }
-        
+
     }
 
     private fun observeNetwork() {
         viewModelScope.launch {
             checkNetwork().collect { isConnected ->
                 when (isConnected) {
-                    is Result.Error ->
-                        when (isConnected.error) {
-                            NetworkError.Local.DISK_FULL -> _uiState.update { it.copy(error = "DISK_FULL") }
-                            NetworkError.Network.NO_INTERNET -> _uiState.update { it.copy(error = "NO_INTERNET") }
-                            NetworkError.Network.UNKNOWN_ERROR -> _uiState.update { it.copy(error = "UNKNOWN_ERROR") }
+                    is Result.Error -> when (isConnected.error) {
+                        NetworkError.Local.DISK_FULL -> _uiState.update {
+                            it.copy(error = isConnected.error)
                         }
+
+                        NetworkError.Network.NO_INTERNET -> _uiState.update {
+                            it.copy(error = isConnected.error)
+                        }
+
+                        NetworkError.Network.UNKNOWN_ERROR -> _uiState.update {
+                            it.copy(error = isConnected.error)
+                        }
+                    }
 
                     is Result.Success -> _uiState.update { it.copy(netWork = isConnected.data) }
                 }

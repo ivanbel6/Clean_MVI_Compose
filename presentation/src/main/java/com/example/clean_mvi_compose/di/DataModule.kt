@@ -1,6 +1,7 @@
 package com.example.clean_mvi_compose.di
 
 import android.content.Context
+import android.content.res.Resources
 import com.example.data.repository.NetworkRepositoryImpl
 import com.example.data.repository.ThemeRepositoryImpl
 import com.example.domain.repository.NetworkRepository
@@ -27,5 +28,7 @@ object DataModule {
     fun provideNetworkRepository(
         @ApplicationContext context: Context,
     ): NetworkRepository = NetworkRepositoryImpl(context)
+
+
 
 }
