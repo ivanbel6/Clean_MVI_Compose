@@ -1,7 +1,9 @@
 package com.example.clean_mvi_compose.ui.homePage
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,25 +16,33 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.clean_mvi_compose.R
 import com.example.clean_mvi_compose.entities.SpaceItem
 import com.example.clean_mvi_compose.ui.main.MainIntent
+import com.example.clean_mvi_compose.ui.main.MainUiState
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    onButtonClick: () -> Unit,
     onItemClick: (SpaceItem) -> Unit = {},
-    vmIntent: (MainIntent) -> Unit ,
-) {
+    vmIntent: (MainIntent) -> Unit = {},
+    uiState: MainUiState,
+
+    ) {
     val items = listOf(
         SpaceItem(
             "Earth",
@@ -50,22 +60,31 @@ fun HomeScreen(
     )
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("🪐 CosmoExplorer") }
-            )
+            TopAppBar(title = { Text("🪐 CosmoExplorer") })
         }
     ) { padding ->
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(8.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            items(items) { item ->
-                SpaceCard(item, onItemClick)
+            ThemeSwitcher(
+                isDarkTheme = uiState.isDarkTheme,
+                onToggle = vmIntent
+            )
+
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(items) { item ->
+                    SpaceCard(item, onItemClick)
+                }
             }
         }
     }
+
 }
 
 @Composable
@@ -123,4 +142,26 @@ fun MainScreenPreview() {
         )
     )
     //HomeScreen(items = mockData)
+}
+
+@Composable
+fun ThemeSwitcher(
+    isDarkTheme: Boolean,
+    onToggle: (MainIntent) -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(
+                id = if (isDarkTheme) R.string.dark_theme else R.string.light_theme
+            ),
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Switch(
+            checked = isDarkTheme, onCheckedChange = { onToggle(MainIntent.ToggleTheme(it)) })
+    }
 }
