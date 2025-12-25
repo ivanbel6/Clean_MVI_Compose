@@ -44,20 +44,11 @@ class MainViewModel @Inject constructor(
             observeThemeUseCase().distinctUntilChanged()
                 .onStart { _uiState.update { it.copy(isLoading = true) } }.collect { isDark ->
                     when (isDark) {
-                        is Result.Error -> when (isDark.error) {
-                            ThemeError.Errors.GET_THEME_ERROR -> _uiState.update {
-                                it.copy(
-                                    error = ThemeError.Errors.GET_THEME_ERROR,
-                                    isLoading = false,
-                                )
-                            }
-
-                            ThemeError.Errors.SET_THEME_ERROR -> _uiState.update {
-                                it.copy(
-                                    error = ThemeError.Errors.SET_THEME_ERROR,
-                                    isLoading = false,
-                                )
-                            }
+                        is Result.Error -> _uiState.update {
+                            it.copy(
+                                error = isDark.error,
+                                isLoading = false,
+                            )
                         }
 
                         is Result.Success -> _uiState.update {
@@ -66,7 +57,6 @@ class MainViewModel @Inject constructor(
                             )
                         }
                     }
-
                 }
         }
     }
@@ -74,11 +64,11 @@ class MainViewModel @Inject constructor(
 
     private fun toggleTheme(isDark: Boolean) {
         viewModelScope.launch {
-            when (setThemeUseCase(isDark)) {
+            when (val themeError = setThemeUseCase(isDark)) {
                 is Result.Success -> Unit
                 is Result.Error -> {
                     _uiState.update {
-                        it.copy(error = ThemeError.Errors.SET_THEME_ERROR)
+                        it.copy(error = themeError.error)
                     }
                 }
             }
@@ -90,20 +80,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             checkNetwork().collect { isConnected ->
                 when (isConnected) {
-                    is Result.Error -> when (isConnected.error) {
-                        NetworkError.Local.DISK_FULL -> _uiState.update {
-                            it.copy(error = isConnected.error)
-                        }
-
-                        NetworkError.Network.NO_INTERNET -> _uiState.update {
-                            it.copy(error = isConnected.error)
-                        }
-
-                        NetworkError.Network.UNKNOWN_ERROR -> _uiState.update {
-                            it.copy(error = isConnected.error)
-                        }
-                    }
-
+                    is Result.Error -> _uiState.update { it.copy(error = isConnected.error) }
                     is Result.Success -> _uiState.update { it.copy(netWork = isConnected.data) }
                 }
             }
