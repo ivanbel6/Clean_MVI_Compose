@@ -1,10 +1,8 @@
-package com.example.clean_mvi_compose.ui.main
+package com.example.clean_mvi_compose.ui.main.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.domainErrors.NetworkError
 import com.example.domain.domainErrors.Result
-import com.example.domain.domainErrors.ThemeError
 import com.example.domain.usecase.networkUseCases.ObserveInternetConnection
 import com.example.domain.usecase.themeUseCases.ObserveTheme
 import com.example.domain.usecase.themeUseCases.SetTheme
@@ -19,23 +17,23 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class AppViewModel @Inject constructor(
     private val setThemeUseCase: SetTheme,
     private val observeThemeUseCase: ObserveTheme,
     private val checkNetwork: ObserveInternetConnection,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(MainUiState())
-    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(AppUiState())
+    val uiState: StateFlow<AppUiState> = _uiState.asStateFlow()
 
     init {
         observeTheme()
         observeNetwork()
     }
 
-    fun handleIntent(intent: MainIntent) {
+    fun handleIntent(intent: AppIntent) {
         when (intent) {
-            is MainIntent.ToggleTheme -> toggleTheme(intent.isDark)
+            is AppIntent.ToggleTheme -> toggleTheme(intent.isDark)
         }
     }
 

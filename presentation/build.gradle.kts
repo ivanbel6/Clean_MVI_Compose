@@ -46,13 +46,13 @@ android {
 
 dependencies {
 
-    // --- Модули проекта ---
+    // Modules
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(libs.androidx.material3)
-    testImplementation(project(":core-test")) // если есть
+    testImplementation(project(":core-test"))
 
-    // --- Kover Coverage (для анализа покрытия тестами) ---
+    //Kover Coverage (for tests) ---
     kover(project(":data"))
     kover(project(":domain"))
 
@@ -124,5 +124,8 @@ dependencies {
     // Serialization
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.androidx.datastore.preferences)  // Актуальная версия на 2025
+    implementation(libs.androidx.datastore.preferences)
+
+    // Material 3
+    implementation(libs.androidx.compose.material.icons.extended)
 }

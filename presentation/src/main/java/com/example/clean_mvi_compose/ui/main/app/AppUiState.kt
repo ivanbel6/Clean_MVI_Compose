@@ -1,9 +1,9 @@
-package com.example.clean_mvi_compose.ui.main
+package com.example.clean_mvi_compose.ui.main.app
 
 import com.example.domain.domainErrors.Error
 
 
-data class MainUiState(
+data class AppUiState(
     val isDarkTheme: Boolean = false,
     val isLoading: Boolean = false,
     val netWork: Boolean = false,

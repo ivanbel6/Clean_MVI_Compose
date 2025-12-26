@@ -3,15 +3,18 @@ package com.example.clean_mvi_compose.ui.homePage
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fitInside
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +25,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,8 +34,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.clean_mvi_compose.R
 import com.example.clean_mvi_compose.entities.SpaceItem
-import com.example.clean_mvi_compose.ui.main.MainIntent
-import com.example.clean_mvi_compose.ui.main.MainUiState
+import com.example.clean_mvi_compose.ui.main.app.AppIntent
+import com.example.clean_mvi_compose.ui.main.app.AppUiState
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,8 +43,8 @@ import com.example.clean_mvi_compose.ui.main.MainUiState
 fun HomeScreen(
     onButtonClick: () -> Unit,
     onItemClick: (SpaceItem) -> Unit = {},
-    vmIntent: (MainIntent) -> Unit = {},
-    uiState: MainUiState,
+    vmIntent: (AppIntent) -> Unit = {},
+    uiState: AppUiState,
 
     ) {
     val items = listOf(
@@ -74,7 +78,13 @@ fun HomeScreen(
                 isDarkTheme = uiState.isDarkTheme,
                 onToggle = vmIntent
             )
-
+            Button(
+                onClick = onButtonClick,
+                modifier = Modifier,
+                contentPadding = PaddingValues(2.dp)
+            ) {
+                Text("navigate to Second Page")
+            }
             LazyColumn(
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -147,7 +157,7 @@ fun MainScreenPreview() {
 @Composable
 fun ThemeSwitcher(
     isDarkTheme: Boolean,
-    onToggle: (MainIntent) -> Unit,
+    onToggle: (AppIntent) -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -162,6 +172,6 @@ fun ThemeSwitcher(
         )
 
         Switch(
-            checked = isDarkTheme, onCheckedChange = { onToggle(MainIntent.ToggleTheme(it)) })
+            checked = isDarkTheme, onCheckedChange = { onToggle(AppIntent.ToggleTheme(it)) })
     }
 }
