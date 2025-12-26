@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.fitInside
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,7 +24,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.clean_mvi_compose.R
 import com.example.clean_mvi_compose.entities.SpaceItem
-import com.example.clean_mvi_compose.ui.main.app.AppIntent
-import com.example.clean_mvi_compose.ui.main.app.AppUiState
+import com.example.clean_mvi_compose.ui.main.AppIntent
+import com.example.clean_mvi_compose.ui.main.AppUiState
 
 
 @OptIn(ExperimentalMaterial3Api::class)

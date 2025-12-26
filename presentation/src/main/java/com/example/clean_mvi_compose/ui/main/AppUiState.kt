@@ -1,4 +1,4 @@
-package com.example.clean_mvi_compose.ui.main.app
+package com.example.clean_mvi_compose.ui.main
 
 import com.example.domain.domainErrors.Error
 

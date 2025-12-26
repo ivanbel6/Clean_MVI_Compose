@@ -1,4 +1,4 @@
-package com.example.clean_mvi_compose.ui.secondPage
+package com.example.clean_mvi_compose.ui.settings
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
