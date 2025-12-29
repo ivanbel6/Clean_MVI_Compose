@@ -7,7 +7,6 @@ import javax.inject.Inject
 
 class SetTheme @Inject constructor(private val repository: ThemeRepository) {
 
-    //suspend operator fun invoke(isItDarkTheme: Boolean) = themeRepository.setTheme(isItDarkTheme)
     suspend operator fun invoke(isDark: Boolean): Result<Unit, ThemeError> =
         repository.setTheme(isDark)
 }
