@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.serialization)
@@ -128,5 +127,23 @@ dependencies {
 
     // Material 3
     implementation(libs.androidx.compose.material.icons.extended)
+
+
+    //Unit tests
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test.v173)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine.v100)
+    testImplementation(libs.truth.v140)
+    testImplementation(libs.robolectric)
+
+    //Instrumented tests
+    androidTestImplementation(libs.androidx.junit.v115)
+    androidTestImplementation(libs.androidx.espresso.core.v351)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.android.compiler)
+    androidTestImplementation(libs.mockwebserver)
+
 
 }

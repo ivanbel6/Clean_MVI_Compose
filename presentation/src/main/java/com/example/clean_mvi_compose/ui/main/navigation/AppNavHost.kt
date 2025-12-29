@@ -1,16 +1,15 @@
-package com.example.clean_mvi_compose.ui.main
+package com.example.clean_mvi_compose.ui.main.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.clean_mvi_compose.navigation.Route
 import com.example.clean_mvi_compose.ui.homePage.HomeScreen
+import com.example.clean_mvi_compose.ui.main.AppIntent
+import com.example.clean_mvi_compose.ui.main.AppUiState
 import com.example.clean_mvi_compose.ui.settings.SecondPage
-import kotlinx.coroutines.delay
 
 
 @Composable

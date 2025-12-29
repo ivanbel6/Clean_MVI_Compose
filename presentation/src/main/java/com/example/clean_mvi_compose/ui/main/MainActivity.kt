@@ -9,6 +9,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.clean_mvi_compose.ui.main.navigation.AppNavHost
 import com.example.clean_mvi_compose.ui.theme.Clean_MVI_ComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
