@@ -5,49 +5,66 @@ import com.example.domain.domainErrors.ThemeError
 import com.example.domain.repository.ThemeRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.confirmVerified
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
+
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SetThemeTest {
 
-    private lateinit var repository: ThemeRepository
+    private val repository: ThemeRepository = mockk(relaxed = false)
     private lateinit var setTheme: SetTheme
 
     @Before
     fun setup() {
-        repository = mockk()
         setTheme = SetTheme(repository)
     }
 
     @Test
-    fun `invoke returns Success when repository succeeds`() = runTest {
-        // arrange
+    fun `when repository returns Success then use case returns Success`() = runTest {
+        // GIVEN
         coEvery { repository.setTheme(true) } returns Result.Success(Unit)
 
-        // act
+        // WHEN
         val result = setTheme(true)
 
-        // assert
-        assertTrue(result is Result.Success)
+        // THEN
+        when (result) {
+            is Result.Success -> {
+                // Unit — there is no data, the fact of success has already
+                // been verified.
+            }
+            else -> fail("Expected Result.Success, but was $result")
+        }
+
         coVerify(exactly = 1) { repository.setTheme(true) }
+        confirmVerified(repository)
     }
 
     @Test
-    fun `invoke returns Error when repository fails`() = runTest {
-        // arrange
-        coEvery { repository.setTheme(false) } returns Result.Error(ThemeError.Errors.SET_THEME_ERROR)
+    fun `when repository returns Error then use case returns same Error`() = runTest {
+        // GIVEN
+        val expectedError = ThemeError.Errors.SET_THEME_ERROR
+        coEvery { repository.setTheme(false) } returns Result.Error(expectedError)
 
-        // act
+        // WHEN
         val result = setTheme(false)
 
-        // assert
-        assertTrue(result is Result.Error)
+        // THEN
+        when (result) {
+            is Result.Error -> {
+                assertEquals(expectedError, result.error)
+            }
+            else -> fail("Expected Result.Error, but was $result")
+        }
+
         coVerify(exactly = 1) { repository.setTheme(false) }
+        confirmVerified(repository)
     }
 }
-

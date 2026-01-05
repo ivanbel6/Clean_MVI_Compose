@@ -105,7 +105,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
@@ -128,21 +127,5 @@ dependencies {
     // Material 3
     implementation(libs.androidx.compose.material.icons.extended)
 
-
-    //Unit tests
-    testImplementation(libs.junit)
-    testImplementation(libs.kotlinx.coroutines.test.v173)
-    testImplementation(libs.mockk)
-    testImplementation(libs.turbine.v100)
-    testImplementation(libs.truth.v140)
-    testImplementation(libs.robolectric)
-
-    //Instrumented tests
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    androidTestImplementation(libs.hilt.android.testing)
-    kspAndroidTest(libs.hilt.android.compiler)
-    androidTestImplementation(libs.mockwebserver)
 
 }
