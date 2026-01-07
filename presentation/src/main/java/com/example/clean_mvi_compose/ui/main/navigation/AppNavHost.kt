@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.clean_mvi_compose.ui.homePage.HomeScreen
 import com.example.clean_mvi_compose.ui.main.AppIntent
 import com.example.clean_mvi_compose.ui.main.AppUiState
-import com.example.clean_mvi_compose.ui.settings.SecondPage
+import com.example.clean_mvi_compose.ui.settings.SettingsScreen
 
 
 @Composable
@@ -56,8 +56,8 @@ fun AppNavHost(
         }
 
         composable<Route.SettingsPage> {
-            SecondPage(
-                onButtonClick = { navController.popBackStack() }
+            SettingsScreen (
+                onBack = { navController.popBackStack() }
             )
         }
     }

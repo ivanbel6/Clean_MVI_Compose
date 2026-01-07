@@ -10,6 +10,5 @@ import javax.inject.Inject
 class ObserveTheme @Inject constructor(
     private val repository: ThemeRepository
 ) {
-    //operator fun invoke(): Flow<Boolean> = repository.getTheme()
     operator fun invoke(): Flow<Result<Boolean, ThemeError>> = repository.observeTheme()
 }
