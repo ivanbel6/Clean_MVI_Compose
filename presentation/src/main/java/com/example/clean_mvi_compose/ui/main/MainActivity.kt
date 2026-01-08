@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.clean_mvi_compose.ui.main.navigation.AppNavHost
+import com.example.clean_mvi_compose.ui.registration.RegistrationViewModel
 import com.example.clean_mvi_compose.ui.theme.Clean_MVI_ComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,14 +24,20 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            val viewModel: AppViewModel = hiltViewModel()
-            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            Log.v("TestInternetConnection", uiState.toString())
+            val appViewModel: AppViewModel = hiltViewModel()
+            val appUiState by appViewModel.uiState.collectAsStateWithLifecycle()
 
-            Clean_MVI_ComposeTheme(darkTheme = uiState.isDarkTheme) {
+            val registrationViewModel : RegistrationViewModel = hiltViewModel()
+            val registrationUiState by registrationViewModel.state.collectAsStateWithLifecycle()
+
+            Log.v("TestInternetConnection", appUiState.toString())
+
+            Clean_MVI_ComposeTheme(darkTheme = appUiState.isDarkTheme) {
                 AppNavHost(
-                    uiState = uiState,
-                    onIntent = viewModel::handleIntent
+                    appUiState = appUiState,
+                    appOnIntent = appViewModel::handleIntent,
+                    registrationUiState = registrationUiState,
+                    registrationOnIntent = registrationViewModel::onIntent,
                 )
             }
         }

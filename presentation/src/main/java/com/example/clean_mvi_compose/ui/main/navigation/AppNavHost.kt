@@ -9,13 +9,18 @@ import androidx.navigation.compose.rememberNavController
 import com.example.clean_mvi_compose.ui.homePage.HomeScreen
 import com.example.clean_mvi_compose.ui.main.AppIntent
 import com.example.clean_mvi_compose.ui.main.AppUiState
+import com.example.clean_mvi_compose.ui.registration.RegistrationIntent
+import com.example.clean_mvi_compose.ui.registration.RegistrationScreen
+import com.example.clean_mvi_compose.ui.registration.RegistrationState
 import com.example.clean_mvi_compose.ui.settings.SettingsScreen
 
 
 @Composable
 fun AppNavHost(
-    uiState: AppUiState,
-    onIntent: (AppIntent) -> Unit,
+    appUiState: AppUiState,
+    registrationUiState: RegistrationState,
+    appOnIntent: (AppIntent) -> Unit,
+    registrationOnIntent: (RegistrationIntent) -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -49,16 +54,25 @@ fun AppNavHost(
     ) {
         composable<Route.HomeScreen> {
             HomeScreen(
-                uiState = uiState,
+                uiState = appUiState,
                 onButtonClick = { navController.navigate(Route.SettingsPage) },
-                vmIntent = onIntent
+                vmIntent = appOnIntent
             )
         }
 
         composable<Route.SettingsPage> {
-            SettingsScreen (
+            SettingsScreen(
                 onBack = { navController.popBackStack() }
             )
         }
+        composable<Route.SettingsPage> {
+            RegistrationScreen(
+                state = registrationUiState,
+                onIntent = registrationOnIntent,
+                onBackClick = { navController.popBackStack() }
+            )
+
+        }
     }
+
 }

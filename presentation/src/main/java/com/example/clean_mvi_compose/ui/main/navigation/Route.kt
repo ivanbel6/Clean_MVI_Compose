@@ -7,4 +7,6 @@ sealed interface Route {
     data object HomeScreen : Route
     @Serializable
     data object SettingsPage : Route
+    @Serializable
+    data object RegistrationPage : Route
 }
