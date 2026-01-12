@@ -55,7 +55,10 @@ fun AppNavHost(
         composable<Route.HomeScreen> {
             HomeScreen(
                 uiState = appUiState,
-                onButtonClick = { navController.navigate(Route.SettingsPage) },
+                onItemClick = {},
+                onNavigateToSecond = {},
+                onNavigateToSettings = { navController.navigate(Route.SettingsPage) },
+                onNavigateToRegistration = { navController.navigate(Route.RegistrationPage) },
                 vmIntent = appOnIntent
             )
         }
@@ -65,7 +68,7 @@ fun AppNavHost(
                 onBack = { navController.popBackStack() }
             )
         }
-        composable<Route.SettingsPage> {
+        composable<Route.RegistrationPage> {
             RegistrationScreen(
                 state = registrationUiState,
                 onIntent = registrationOnIntent,

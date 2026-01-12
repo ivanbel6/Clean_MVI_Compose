@@ -54,7 +54,7 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun register() {
-        // тут будет use case, репозиторий, сеть, страдания и жизнь
+
     }
 
     private fun isValidEmail(email: String): Boolean =

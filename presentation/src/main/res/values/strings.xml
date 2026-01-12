@@ -3,4 +3,24 @@
 
     <string name="dark_theme">Тёмная тема</string>
     <string name="light_theme">Светлая тема</string>
+    <string name="hello">Привет</string>
+    <string name="createAcc">Создание аккаунта</string>
+    <string name="enterRegistrationData">Введите данные для регистрации</string>
+    <string name="password">Пароль</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="alreadyHaveAccThenEnter">Уже есть аккаунт? Войти</string>
+    <string name="orEnterThrough">Или продолжить через</string>
+    <string name="settings">Настройки</string>
+    <string name="nameAndSurname">Имя Фамилия</string>
+    <string name="enterOrRegister">Войти или зарегистрироваться</string>
+    <string name="SyncAndBackups">Синхронизация и резервные копии</string>
+    <string name="theme">Тема</string>
+    <string name="darkTheme">Тёмная</string>
+    <string name="lightTheme">Светлая</string>
+    <string name="language">Язык</string>
+    <string name="mainСurrency">Основная валюта</string>
+    <string name="aboutApp">О приложении</string>
+    <string name="currentVersion">Версия 1.0.0</string>
+    <string name="help">Помощь</string>
+    <string name="faqAndSupport">FAQ и поддержка</string>
 </resources>

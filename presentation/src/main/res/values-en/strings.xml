@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Clean_MVI_Compose</string>
-
     <string name="dark_theme">Dark theme</string>
     <string name="light_theme">Light theme</string>
+    <string name="hello">hello</string>
+    <string name="createAcc">Account Creation</string>
+    <string name="enterRegistrationData">Enter registration data</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="alreadyHaveAccThenEnter">Already have an account? Log in</string>
+    <string name="orEnterThrough">Or continue with</string>
+    <string name="settings">Settings</string>
+    <string name="nameAndSurname">First and Last Name</string>
+    <string name="enterOrRegister">Log in or register</string>
+    <string name="SyncAndBackups">Synchronization and backups</string>
+    <string name="theme">Theme</string>
+    <string name="darkTheme">Dark</string>
+    <string name="lightTheme">Light</string>
+    <string name="language">Language</string>
+    <string name="mainСurrency">Main currency</string>
+    <string name="aboutApp">About the app</string>
+    <string name="currentVersion">Version 1.0.0</string>
+    <string name="help">Help</string>
+    <string name="faqAndSupport">FAQ and support</string>
 </resources>

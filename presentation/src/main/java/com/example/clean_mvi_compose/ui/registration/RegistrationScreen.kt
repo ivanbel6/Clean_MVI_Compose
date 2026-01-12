@@ -1,5 +1,6 @@
 package com.example.clean_mvi_compose.ui.registration
 
+import com.example.clean_mvi_compose.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +28,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,7 +50,7 @@ fun RegistrationScreen(
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Назад"
+                            contentDescription = stringResource(R.string.hello)
                         )
                     }
                 }
@@ -68,12 +73,12 @@ fun RegistrationScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Создание аккаунта",
+                    text = stringResource(R.string.createAcc),
                     style = MaterialTheme.typography.headlineLarge
                 )
 
                 Text(
-                    text = "Введите данные для регистрации",
+                    text = stringResource(R.string.enterRegistrationData),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -95,7 +100,7 @@ fun RegistrationScreen(
                 OutlinedTextField(
                     value = state.password,
                     onValueChange = { onIntent(RegistrationIntent.PasswordChanged(it)) },
-                    label = { Text("Пароль") },
+                    label = { Text(stringResource(R.string.password)) },
                     isError = state.passwordError != null,
                     supportingText = {
                         state.passwordError?.let { Text(it) }
@@ -112,14 +117,14 @@ fun RegistrationScreen(
                         .fillMaxWidth()
                         .height(52.dp)
                 ) {
-                    Text("Зарегистрироваться")
+                    Text(stringResource(R.string.register))
                 }
 
                 TextButton(
                     onClick = { onIntent(RegistrationIntent.NavigateToLogin) },
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
-                    Text("Уже есть аккаунт? Войти")
+                    Text(stringResource(R.string.alreadyHaveAccThenEnter))
                 }
             }
 
@@ -130,7 +135,7 @@ fun RegistrationScreen(
             ) {
 
                 Text(
-                    text = "Или продолжить через",
+                    text = stringResource(R.string.orEnterThrough),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -147,23 +152,15 @@ fun RegistrationScreen(
                     SocialIconButton(
                         onClick = { onIntent(RegistrationIntent.GoogleSignIn) },
                         icon = {
-                            Text("G", style = MaterialTheme.typography.titleMedium)
+                            Icon(
+                                painter = painterResource(R.drawable.ic_google),
+                                contentDescription = "Google sign in",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.size(28.dp)
+                            )
                         }
                     )
 
-                    SocialIconButton(
-                        onClick = { onIntent(RegistrationIntent.GitHubSignIn) },
-                        icon = {
-                            Text("GH", style = MaterialTheme.typography.titleSmall)
-                        }
-                    )
-
-                    SocialIconButton(
-                        onClick = { onIntent(RegistrationIntent.AppleSignIn) },
-                        icon = {
-                            Text("", style = MaterialTheme.typography.titleMedium)
-                        }
-                    )
                 }
             }
         }
@@ -189,5 +186,13 @@ private fun SocialIconButton(
         }
     }
 }
-
+@Preview(showBackground = true)
+@Composable
+fun RegistrationScreenPreview() {
+    RegistrationScreen(
+        state = RegistrationState(),
+        onIntent = {},
+        onBackClick = {}
+    )
+}
 
