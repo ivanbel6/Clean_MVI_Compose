@@ -6,22 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.clean_mvi_compose.ui.homePage.HomeScreen
-import com.example.clean_mvi_compose.ui.main.AppIntent
-import com.example.clean_mvi_compose.ui.main.AppUiState
-import com.example.clean_mvi_compose.ui.registration.RegistrationIntent
-import com.example.clean_mvi_compose.ui.registration.RegistrationScreen
-import com.example.clean_mvi_compose.ui.registration.RegistrationState
-import com.example.clean_mvi_compose.ui.settings.SettingsScreen
+import com.example.clean_mvi_compose.ui.homePage.navigation.HomeRoute
+import com.example.clean_mvi_compose.ui.registration.navigation.RegistrationRoute
+import com.example.clean_mvi_compose.ui.settings.navigation.SettingsRoute
 
 
 @Composable
-fun AppNavHost(
-    appUiState: AppUiState,
-    registrationUiState: RegistrationState,
-    appOnIntent: (AppIntent) -> Unit,
-    registrationOnIntent: (RegistrationIntent) -> Unit,
-) {
+fun AppNavHost() {
     val navController = rememberNavController()
 
     NavHost(
@@ -52,30 +43,28 @@ fun AppNavHost(
             )
         }
     ) {
+
         composable<Route.HomeScreen> {
-            HomeScreen(
-                uiState = appUiState,
-                onItemClick = {},
-                onNavigateToSecond = {},
-                onNavigateToSettings = { navController.navigate(Route.SettingsPage) },
-                onNavigateToRegistration = { navController.navigate(Route.RegistrationPage) },
-                vmIntent = appOnIntent
+            HomeRoute(
+                onNavigateToSettings = {
+                    navController.navigate(Route.SettingsPage)
+                },
+                onNavigateToRegistration = {
+                    navController.navigate(Route.RegistrationPage)
+                }
             )
         }
 
         composable<Route.SettingsPage> {
-            SettingsScreen(
+            SettingsRoute(
                 onBack = { navController.popBackStack() }
             )
         }
-        composable<Route.RegistrationPage> {
-            RegistrationScreen(
-                state = registrationUiState,
-                onIntent = registrationOnIntent,
-                onBackClick = { navController.popBackStack() }
-            )
 
+        composable<Route.RegistrationPage> {
+            RegistrationRoute(
+                onBack = { navController.popBackStack() }
+            )
         }
     }
-
 }
