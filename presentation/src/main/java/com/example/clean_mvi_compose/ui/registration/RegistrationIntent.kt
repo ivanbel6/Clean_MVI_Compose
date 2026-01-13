@@ -8,8 +8,4 @@ sealed interface RegistrationIntent {
     data object NavigateToLogin : RegistrationIntent
     object GoogleSignIn : RegistrationIntent
 
-    object GitHubSignIn : RegistrationIntent
-
-    object AppleSignIn : RegistrationIntent
-
 }

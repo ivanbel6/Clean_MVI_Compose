@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.domain.domainErrors.AccountError
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,21 +90,26 @@ fun RegistrationScreen(
                     value = state.email,
                     onValueChange = { onIntent(RegistrationIntent.EmailChanged(it)) },
                     label = { Text("Email") },
-                    isError = state.emailError != null,
+                    isError = state.regEmailError != null,
                     supportingText = {
-                        state.emailError?.let { Text(it) }
+                        emailErrorText(state.regEmailError)?.let {
+                            Text(text = it)
+                        }
                     },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
 
+
                 OutlinedTextField(
                     value = state.password,
                     onValueChange = { onIntent(RegistrationIntent.PasswordChanged(it)) },
                     label = { Text(stringResource(R.string.password)) },
-                    isError = state.passwordError != null,
+                    isError = state.regPasswordError != null,
                     supportingText = {
-                        state.passwordError?.let { Text(it) }
+                        passwordErrorText(state.regPasswordError)?.let {
+                            Text(text = it)
+                        }
                     },
                     visualTransformation = PasswordVisualTransformation(),
                     singleLine = true,
@@ -195,4 +201,20 @@ fun RegistrationScreenPreview() {
         onBackClick = {}
     )
 }
+@Composable
+fun emailErrorText(error: AccountError.Register?): String? =
+    when (error) {
+        AccountError.Register.EMAIL_ERROR ->
+            stringResource(R.string.error_invalid_email)
+        else -> null
+    }
+
+@Composable
+fun passwordErrorText(error: AccountError.Register?): String? =
+    when (error) {
+        AccountError.Register.PASSWORD_ERROR ->
+            stringResource(R.string.error_invalid_password)
+        else -> null
+    }
+
 

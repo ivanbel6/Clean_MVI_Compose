@@ -2,6 +2,7 @@ package com.example.clean_mvi_compose.ui.registration
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.domain.domainErrors.AccountError
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,9 +25,6 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
             RegistrationIntent.Submit -> {
                 register()
             }
-
-            RegistrationIntent.AppleSignIn -> Log.v("IntentTest", "AppleSignIn")
-            RegistrationIntent.GitHubSignIn -> Log.v("IntentTest", "GitHubSignIn")
             RegistrationIntent.GoogleSignIn -> Log.v("IntentTest", "GoogleSignIn")
             RegistrationIntent.NavigateToLogin -> Log.v("IntentTest", "NavigateToLogin")
         }
@@ -36,19 +34,21 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
         email: String = _state.value.email,
         password: String = _state.value.password,
     ) {
-        val emailError = if (email.isNotBlank() && !isValidEmail(email)) {
-            "Некорректный email"
-        } else null
+        val emailError =
+            if (email.isNotBlank() && !isValidEmail(email)) {
+                AccountError.Register.EMAIL_ERROR
+            } else null
 
-        val passwordError = if (password.isNotBlank() && password.length < 6) {
-            "Минимум 6 символов"
-        } else null
+        val passwordError =
+            if (password.isNotBlank() && password.length < 6) {
+                AccountError.Register.PASSWORD_ERROR
+            } else null
 
         _state.value = _state.value.copy(
             email = email,
             password = password,
-            emailError = emailError,
-            passwordError = passwordError,
+            regEmailError = emailError,
+            regPasswordError = passwordError,
             isSubmitEnabled = emailError == null && passwordError == null && email.isNotBlank() && password.isNotBlank()
         )
     }

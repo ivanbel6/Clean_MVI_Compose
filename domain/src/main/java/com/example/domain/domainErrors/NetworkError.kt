@@ -6,7 +6,4 @@ sealed interface NetworkError : Error {
         UNKNOWN_ERROR,
     }
 
-    enum class Local : NetworkError {
-        DISK_FULL
-    }
 }

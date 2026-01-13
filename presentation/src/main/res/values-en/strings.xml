@@ -23,4 +23,6 @@
     <string name="currentVersion">Version 1.0.0</string>
     <string name="help">Help</string>
     <string name="faqAndSupport">FAQ and support</string>
+    <string name="error_invalid_email">Incorrect email</string>
+    <string name="error_invalid_password">Minimum 6 symbols</string>
 </resources>

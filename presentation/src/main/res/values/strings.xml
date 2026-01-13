@@ -23,4 +23,6 @@
     <string name="currentVersion">Версия 1.0.0</string>
     <string name="help">Помощь</string>
     <string name="faqAndSupport">FAQ и поддержка</string>
+    <string name="error_invalid_email">Некорректный email</string>
+    <string name="error_invalid_password">Минимум 6 символов</string>
 </resources>
