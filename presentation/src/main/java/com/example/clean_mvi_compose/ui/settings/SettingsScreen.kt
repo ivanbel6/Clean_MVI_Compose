@@ -43,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.clean_mvi_compose.R
+import com.example.clean_mvi_compose.ui.theme.Clean_MVI_ComposeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -235,8 +236,17 @@ private fun PreferenceItem(
 }
 @Preview(showBackground = true)
 @Composable
-fun SettingsScreenPreview() {
-    SettingsScreen(
-        onBack = {}
-    )
+fun SettingsScreenLightPreview() {
+    Clean_MVI_ComposeTheme(darkTheme = false) {
+        SettingsScreen(onBack = {})
+    }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun SettingsScreenDarkPreview() {
+    Clean_MVI_ComposeTheme(darkTheme = true) {
+        SettingsScreen(onBack = {})
+    }
+}
+

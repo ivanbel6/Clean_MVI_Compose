@@ -22,6 +22,7 @@ import com.example.clean_mvi_compose.R
 import com.example.clean_mvi_compose.entities.SpaceItem
 import com.example.clean_mvi_compose.ui.main.AppIntent
 import com.example.clean_mvi_compose.ui.main.AppUiState
+import com.example.clean_mvi_compose.ui.theme.Clean_MVI_ComposeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,7 +32,7 @@ fun HomeScreen(
     onNavigateToSecond: () -> Unit,
     onNavigateToSettings: () -> Unit,
     onNavigateToRegistration: () -> Unit,
-    vmIntent: (AppIntent) -> Unit
+    vmIntent: (AppIntent) -> Unit,
 ) {
 
     val items = rememberSpaceItems()
@@ -94,7 +95,7 @@ fun HomeScreen(
 @Composable
 fun SpaceCard(
     item: SpaceItem,
-    onClick: (SpaceItem) -> Unit
+    onClick: (SpaceItem) -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -131,7 +132,7 @@ fun SpaceCard(
 @Composable
 fun ThemeSwitcher(
     isDarkTheme: Boolean,
-    onToggle: (AppIntent) -> Unit
+    onToggle: (AppIntent) -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -173,13 +174,32 @@ private fun rememberSpaceItems(): List<SpaceItem> =
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
-    HomeScreen(
-        uiState = AppUiState(),
-        onItemClick = {},
-        onNavigateToSecond = {},
-        onNavigateToSettings = {},
-        onNavigateToRegistration = {},
-        vmIntent = {}
-    )
+fun HomeScreenLightPreview() {
+    Clean_MVI_ComposeTheme(darkTheme = false) {
+        HomeScreen(
+            uiState = AppUiState(),
+            onItemClick = {},
+            onNavigateToSecond = {},
+            onNavigateToSettings = {},
+            onNavigateToRegistration = {},
+            vmIntent = {}
+        )
+    }
+
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenDarkPreview() {
+    Clean_MVI_ComposeTheme(darkTheme = true) {
+        HomeScreen(
+            uiState = AppUiState(),
+            onItemClick = {},
+            onNavigateToSecond = {},
+            onNavigateToSettings = {},
+            onNavigateToRegistration = {},
+            vmIntent = {}
+        )
+    }
+
 }

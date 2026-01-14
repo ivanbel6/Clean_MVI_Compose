@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.clean_mvi_compose.ui.theme.Clean_MVI_ComposeTheme
 import com.example.domain.domainErrors.AccountError
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,7 +42,7 @@ import com.example.domain.domainErrors.AccountError
 fun RegistrationScreen(
     state: RegistrationState,
     onIntent: (RegistrationIntent) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -177,7 +178,7 @@ fun RegistrationScreen(
 @Composable
 private fun SocialIconButton(
     onClick: () -> Unit,
-    icon: @Composable () -> Unit
+    icon: @Composable () -> Unit,
 ) {
     Surface(
         onClick = onClick,
@@ -192,20 +193,13 @@ private fun SocialIconButton(
         }
     }
 }
-@Preview(showBackground = true)
-@Composable
-fun RegistrationScreenPreview() {
-    RegistrationScreen(
-        state = RegistrationState(),
-        onIntent = {},
-        onBackClick = {}
-    )
-}
+
 @Composable
 fun emailErrorText(error: AccountError.Register?): String? =
     when (error) {
         AccountError.Register.EMAIL_ERROR ->
             stringResource(R.string.error_invalid_email)
+
         else -> null
     }
 
@@ -214,7 +208,32 @@ fun passwordErrorText(error: AccountError.Register?): String? =
     when (error) {
         AccountError.Register.PASSWORD_ERROR ->
             stringResource(R.string.error_invalid_password)
+
         else -> null
     }
 
+@Preview(showBackground = true)
+@Composable
+fun RegistrationScreenLightPreview() {
+    Clean_MVI_ComposeTheme(darkTheme = false) {
+        RegistrationScreen(
+            state = RegistrationState(),
+            onIntent = {},
+            onBackClick = {}
+        )
+    }
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RegistrationScreenDarkPreview() {
+    Clean_MVI_ComposeTheme(darkTheme = true) {
+        RegistrationScreen(
+            state = RegistrationState(),
+            onIntent = {},
+            onBackClick = {}
+        )
+    }
+
+}
