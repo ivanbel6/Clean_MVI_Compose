@@ -10,7 +10,8 @@ import com.example.clean_mvi_compose.ui.main.AppViewModel
 @Composable
 fun HomeRoute(
     onNavigateToSettings: () -> Unit,
-    onNavigateToRegistration: () -> Unit
+    onNavigateToRegistration: () -> Unit,
+    onNavigateToOnBoarding: () -> Unit
 ) {
     val appViewModel: AppViewModel = hiltViewModel()
     val appUiState by appViewModel.uiState.collectAsStateWithLifecycle()
@@ -18,9 +19,9 @@ fun HomeRoute(
     HomeScreen(
         uiState = appUiState,
         onItemClick = {},
-        onNavigateToSecond = {},
         onNavigateToSettings = onNavigateToSettings,
         onNavigateToRegistration = onNavigateToRegistration,
+        onNavigateToOnBoarding = onNavigateToOnBoarding,
         vmIntent = appViewModel::handleIntent
     )
 }

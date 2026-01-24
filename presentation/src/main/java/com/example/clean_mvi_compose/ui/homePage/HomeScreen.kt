@@ -29,9 +29,9 @@ import com.example.clean_mvi_compose.ui.theme.Clean_MVI_ComposeTheme
 fun HomeScreen(
     uiState: AppUiState,
     onItemClick: (SpaceItem) -> Unit,
-    onNavigateToSecond: () -> Unit,
     onNavigateToSettings: () -> Unit,
     onNavigateToRegistration: () -> Unit,
+    onNavigateToOnBoarding: () -> Unit ,
     vmIntent: (AppIntent) -> Unit,
 ) {
 
@@ -73,11 +73,11 @@ fun HomeScreen(
             )
 
             Button(
-                onClick = onNavigateToSecond,
+                onClick = onNavigateToOnBoarding,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Text("Navigate to Second Page")
+                Text("Navigate to OnBoarding")
             }
 
             LazyColumn(
@@ -179,9 +179,9 @@ fun HomeScreenLightPreview() {
         HomeScreen(
             uiState = AppUiState(),
             onItemClick = {},
-            onNavigateToSecond = {},
             onNavigateToSettings = {},
             onNavigateToRegistration = {},
+            onNavigateToOnBoarding = {},
             vmIntent = {}
         )
     }
@@ -195,7 +195,7 @@ fun HomeScreenDarkPreview() {
         HomeScreen(
             uiState = AppUiState(),
             onItemClick = {},
-            onNavigateToSecond = {},
+            onNavigateToOnBoarding = {},
             onNavigateToSettings = {},
             onNavigateToRegistration = {},
             vmIntent = {}

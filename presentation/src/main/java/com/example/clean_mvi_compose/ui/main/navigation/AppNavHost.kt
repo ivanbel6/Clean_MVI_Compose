@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.clean_mvi_compose.ui.homePage.navigation.HomeRoute
+import com.example.clean_mvi_compose.ui.onboarding.navigation.OnboardingRoute
 import com.example.clean_mvi_compose.ui.registration.navigation.RegistrationRoute
 import com.example.clean_mvi_compose.ui.settings.navigation.SettingsRoute
 
@@ -44,6 +45,10 @@ fun AppNavHost() {
         }
     ) {
 
+        composable<Route.Onboarding> {
+            OnboardingRoute(navController)
+        }
+
         composable<Route.HomeScreen> {
             HomeRoute(
                 onNavigateToSettings = {
@@ -51,6 +56,9 @@ fun AppNavHost() {
                 },
                 onNavigateToRegistration = {
                     navController.navigate(Route.RegistrationPage)
+                },
+                onNavigateToOnBoarding = {
+                    navController.navigate(Route.Onboarding)
                 }
             )
         }
