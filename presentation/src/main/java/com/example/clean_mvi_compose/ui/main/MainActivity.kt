@@ -1,14 +1,10 @@
 package com.example.clean_mvi_compose.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.runtime.getValue
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.clean_mvi_compose.ui.main.navigation.AppNavHost
 import com.example.clean_mvi_compose.ui.theme.Clean_MVI_ComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,11 +19,7 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            val appViewModel: AppViewModel = hiltViewModel()
-            val appUiState by appViewModel.uiState.collectAsStateWithLifecycle()
-            Log.v("TestInternetConnection", appUiState.toString())
-
-            Clean_MVI_ComposeTheme(darkTheme = appUiState.isDarkTheme) {
+            Clean_MVI_ComposeTheme {
                 AppNavHost()
             }
         }
